@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 工具前哨站 - 发现与教程</title>
+    <style>
+        /* --- 1. 基础样式 (CSS) --- */
+        :root {
+            --primary-color: #2563eb; /* 主色调：科技蓝 */
+            --bg-color: #f8fafc;      /* 背景色：灰白 */
+            --card-bg: #ffffff;       /* 卡片背景：纯白 */
+            --text-main: #1e293b;     /* 主文字颜色 */
+            --text-gray: #64748b;     /* 辅助文字颜色 */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* --- 2. 顶部导航 --- */
+        header {
+            background: var(--card-bg);
+            padding: 1rem 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); }
+        .nav-links a { margin-left: 20px; font-weight: 500; }
+        .nav-links a:hover { color: var(--primary-color); }
+
+        /* --- 3. 头部区域 --- */
+        .hero {
+            text-align: center;
+            padding: 5rem 1rem;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        }
+
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .hero p { color: var(--text-gray); font-size: 1.2rem; }
+
+        /* --- 4. 通用容器与标题 --- */
+        .container {
+            max-width: 1000px; /* 宽度保持紧凑，适合两列布局 */
+            margin: 0 auto;
+            padding: 40px 20px 20px; 
+        }
+
+        .section-title { 
+            margin: 50px 0 20px; 
+            border-left: 5px solid var(--primary-color); 
+            padding-left: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .section-title:first-child { margin-top: 0; }
+
+        /* --- 5. 工具卡片网格 (2列布局) --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 强制电脑端显示2列 */
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: #eff6ff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .card-title h3 { font-size: 1.1rem; }
+        .card-title span { font-size: 0.75rem; background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 4px; }
+        .tag-hot { background: #fee2e2 !important; color: #991b1b !important; }
+
+        .card-body { padding: 20px; flex: 1; }
+        .card-body p { font-size: 0.95rem; color: var(--text-gray); margin-bottom: 15px; }
+
+        .card-footer {
+            padding: 15px 20px;
+            background: #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            text-align: center;
+            padding: 8px 0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .btn-outline { border: 1px solid #cbd5e1; color: var(--text-main); }
+        .btn-primary { background: var(--primary-color); color: white; }
+        .btn-primary:hover { opacity: 0.9; }
+
+        /* --- 6. 教程列表样式 (按系列分类) --- */
+        .tutorial-group {
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+        }
+
+        .group-header {
+            background: #f1f5f9;
+            padding: 15px 20px;
+            font-weight: bold;
+            color: #334155;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tutorial-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #f1f5f9;
+            transition: 0.2s;
+            cursor: pointer;
+            background: #fff;
+        }
+        
+        .tutorial-item:last-child { border-bottom: none; }
+
+        .tutorial-item:hover {
+            background: #f8fafc;
+        }
+
+        .tutorial-content { flex: 1; }
+        .tutorial-content h3 { font-size: 1rem; margin-bottom: 5px; color: #1e293b; }
+        .tutorial-content p { font-size: 0.85rem; color: #64748b; margin: 0; }
+        
+        .tutorial-arrow {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            margin-left: 20px;
+        }
+        .tutorial-item:hover .tutorial-arrow { color: var(--primary-color); }
+
+        /* --- 响应式调整 --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.8rem; }
+            .grid { grid-template-columns: 1fr; } 
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <header>
+        <div class="logo">🤖 AI 工具前哨站</div>
+        <nav class="nav-links">
+            <a href="#">首页</a>
+            <!-- 👇 已修改为“关于作者”并添加了链接 -->
+            <a href="https://davidyang0429.github.io/about-me/" target="_blank">关于作者</a>
+        </nav>
+    </header>
+
+    <!-- 头部区域 -->
+    <div class="hero">
+        <h1>探索最强大的 AI 工具</h1>
+        <p>收录精选 AI 工具，附带保姆级使用教程</p>
+    </div>
+
+    <!-- 主要内容区 -->
+    <div class="container">
+        
+        <!-- 板块 1: 热门推荐 (2列) -->
+        <h2 class="section-title">🔥 热门推荐</h2>
+        <div class="grid">
+            
+            <!-- 1. ChatGPT -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🧠</div>
+                    <div class="card-title">
+                        <h3>ChatGPT</h3>
+                        <span>免费/付费</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>OpenAI 开发的最强对话模型。可以写文案、翻译、写代码，是目前通用的 AI 生产力工具。</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.notion.so/ChatGPT-2b7b6fa72f77805a8554d2355b8f4903?source=copy_link" target="_blank" class="btn btn-outline">📖 查看教程</a>
+                    <a href="https://chat.openai.com" target="_blank" class="btn btn-primary">🚀 直达官网</a>
+                </div>
+            </div>
+
+            <!-- 2. Google Gemini -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">💎</div>
+                    <div class="card-title">
+                        <h3>Gemini</h3>
+                        <span>Google出品</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>谷歌的多模态大模型，深度集成在 Google 文档和邮箱中，查询实时信息能力极强。</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.notion.so/Gemini-2b7b6fa72f77801ca68ef943276e52fe?source=copy_link" target="_blank" class="btn btn-outline">📖 查看教程</a>
+                    <a href="https://gemini.google.com" target="_blank" class="btn btn-primary">🚀 直达官网</a>
+                </div>
+            </div>
+
+            <!-- 3. Cursor -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">💻</div>
+                    <div class="card-title">
+                        <h3>Cursor</h3>
+                        <span class="tag-hot">编程必备</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>当前最火的 AI 代码编辑器（基于 VS Code）。它能读懂你的整个项目，帮你一键写代码、改 Bug。</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.notion.so/Cursor-AI-2b7b6fa72f77807b8fa9cd06d523c72d?source=copy_link" target="_blank" class="btn btn-outline">📖 查看教程</a>
+                    <a href="https://cursor.sh" target="_blank" class="btn btn-primary">🚀 直达官网</a>
+                </div>
+            </div>
+
+            <!-- 4. Midjourney -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🎨</div>
+                    <div class="card-title">
+                        <h3>Midjourney</h3>
+                        <span>付费</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>目前绘图质量最高的 AI 工具。运行在 Discord 上，生成的图片艺术感极强，适合设计师。</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.notion.so/Midjourney-2b7b6fa72f77804cb042c688cf3533bb?source=copy_link" target="_blank" class="btn btn-outline">📖 查看教程</a>
+                    <a href="https://www.midjourney.com" target="_blank" class="btn btn-primary">🚀 直达官网</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 板块 2: 精选教程 (按系列分类) -->
+        <h2 class="section-title">📚 精选教程</h2>
+        
+        <!-- 系列 A: ChatGPT -->
+        <div class="tutorial-group">
+            <div class="group-header">🟢 OpenAI / ChatGPT 系列</div>
+            
+            <a href="https://www.notion.so/ChatGPT-2b7b6fa72f77805a8554d2355b8f4903?source=copy_link" target="_blank" class="tutorial-item">
+                <div class="tutorial-content">
+                    <h3>ChatGPT 新手必读：从注册到精通</h3>
+                    <p>零基础上手，教你如何用提示词（Prompt）极速提高工作效率。</p>
+                </div>
+                <div class="tutorial-arrow">→</div>
+            </a>
+            
+        </div>
+
+        <!-- 系列 B: Google Gemini -->
+        <div class="tutorial-group">
+            <div class="group-header">🔵 Google / Gemini 系列</div>
+            
+            <a href="https://www.notion.so/Gemini-2b7b6fa72f77801ca68ef943276e52fe?source=copy_link" target="_blank" class="tutorial-item">
+                <div class="tutorial-content">
+                    <h3>Gemini 深度评测：它比 GPT 好在哪里？</h3>
+                    <p>结合 Google 文档与邮箱，打造最强办公自动化流程。</p>
+                </div>
+                <div class="tutorial-arrow">→</div>
+            </a>
+        </div>
+
+        <!-- 系列 C: 创作与开发 -->
+        <div class="tutorial-group">
+            <div class="group-header">🟣 创作与开发系列</div>
+            
+            <a href="https://www.notion.so/Cursor-AI-2b7b6fa72f77807b8fa9cd06d523c72d?source=copy_link" target="_blank" class="tutorial-item">
+                <div class="tutorial-content">
+                    <h3>Cursor 实战：完全不懂代码如何做网站？</h3>
+                    <p>利用 AI 代码编辑器，10分钟搭建一个属于你的个人主页。</p>
+                </div>
+                <div class="tutorial-arrow">→</div>
+            </a>
+
+            <a href="https://www.notion.so/Midjourney-2b7b6fa72f77804cb042c688cf3533bb?source=copy_link" target="_blank" class="tutorial-item">
+                <div class="tutorial-content">
+                    <h3>Midjourney 绘图指南：设计你的第一张海报</h3>
+                    <p>详细讲解指令参数，不用学画画也能做设计师。</p>
+                </div>
+                <div class="tutorial-arrow">→</div>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- 底部 -->
+    <footer style="text-align: center; padding: 40px; color: #64748b; font-size: 0.9rem;">
+        <p>&copy; 2025 AI 工具前哨站. 让 AI 为你所用。</p>
+    </footer>
+
+</body>
+</html>
